@@ -1,0 +1,53 @@
+<%- include('header') %>
+<div style="background:linear-gradient(135deg,#ff6a00,#c24a00);padding:30px 16px">
+  <div style="max-width:900px;margin:0 auto;display:flex;gap:22px;align-items:center;flex-wrap:wrap;justify-content:center">
+    <% if (p.photo) { %><img class="pf-photo" style="max-width:220px;border-color:#000" src="/uploads/<%= p.photo %>" alt="<%= p.name %>"><% } %>
+    <div>
+      <% if (p.jersey) { %><div style="font-size:80px;font-weight:900;color:#000;line-height:1">#<%= p.jersey %></div><% } %>
+      <div class="pf-name" style="color:#000"><%= p.name %></div>
+      <div style="color:#000;font-weight:700;letter-spacing:2px;text-transform:uppercase"><%= p.position %></div>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="max-width:900px">
+  <div class="stats">
+    <% if (p.age) { %><div class="stat"><b><%= p.age %></b><small>Age</small></div><% } %>
+    <% if (p.height_cm) { %><div class="stat"><b><%= p.height_cm %></b><small>Height cm</small></div><% } %>
+    <% if (p.weight_kg) { %><div class="stat"><b><%= p.weight_kg %></b><small>Weight kg</small></div><% } %>
+    <% if (p.foot) { %><div class="stat"><b><%= p.foot %></b><small>Foot</small></div><% } %>
+  </div>
+
+  <div class="actions">
+    <% if (L.wa) { %><a class="act main" href="<%= L.wa %>" target="_blank" rel="noopener">WhatsApp</a><% } %>
+    <% if (L.tel) { %><a class="act main" href="<%= L.tel %>">Call</a><% } %>
+    <% if (L.ig) { %><a class="act" href="<%= L.ig %>" target="_blank" rel="noopener">Instagram</a><% } %>
+    <% if (L.mail) { %><a class="act" href="<%= L.mail %>">Email</a><% } %>
+    <% if (L.map) { %><a class="act" href="<%= L.map %>" target="_blank" rel="noopener">Location</a><% } %>
+    <% if (L.cv) { %><a class="act" href="<%= L.cv %>" target="_blank">CV (PDF)</a><% } %>
+  </div>
+
+  <% if (L.yt) { %>
+  <div class="card">
+    <h2>Highlights</h2>
+    <% if (embed) { %><div class="video"><iframe src="<%= embed %>" allowfullscreen></iframe></div><% } %>
+    <a class="act" href="<%= L.yt %>" target="_blank" rel="noopener">Watch on YouTube</a>
+  </div>
+  <% } %>
+
+  <div class="grid2">
+    <% if (lines(p.career).length) { %>
+    <div class="card"><h2>Playing Career</h2>
+      <% lines(p.career).forEach(function(l) { %><p>• <%= l %></p><% }) %></div>
+    <% } %>
+    <% if (lines(p.achievements).length) { %>
+    <div class="card"><h2>Achievements</h2>
+      <% lines(p.achievements).forEach(function(l) { %><p>• <%= l %></p><% }) %></div>
+    <% } %>
+  </div>
+  <% if (lines(p.strengths).length) { %>
+  <div class="card"><h2>Strengths</h2>
+    <% lines(p.strengths).forEach(function(l) { %><span class="badge" style="background:#2a2a2e;color:#ff8a33;display:inline-block;margin:4px;padding:7px 14px;font-size:14px"><%= l %></span><% }) %></div>
+  <% } %>
+</div>
+<%- include('footer') %>

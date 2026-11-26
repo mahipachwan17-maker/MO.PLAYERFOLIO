@@ -1,0 +1,53 @@
+<%- include('header') %>
+<div class="container">
+  <% if (error) { %><div class="msg err"><%= error %></div><% } %>
+  <% if (ok) { %><div class="msg ok"><%= ok %></div><% } %>
+
+  <div class="card">
+    <h2>Create Player Account</h2>
+    <form method="POST" action="/admin/create">
+      <div class="grid3">
+        <div><label>Player Name</label><input name="name" placeholder="e.g. Rahul Sharma"></div>
+        <div><label>Username</label><input name="username" required></div>
+        <div><label>Password</label><input name="password" required></div>
+      </div>
+      <br>
+      <button class="btn" type="submit">Create Player</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>All Players (<%= players.length %>)</h2>
+    <% if (players.length === 0) { %>
+      <p style="color:#8a8a92">No players yet. Create the first one above.</p>
+    <% } else { %>
+    <div style="overflow-x:auto">
+    <table>
+      <tr><th>Name</th><th>Username</th><th>Status</th><th>NFC Link</th><th>Actions</th></tr>
+      <% players.forEach(function(pl) { %>
+      <tr>
+        <td><%= pl.name || '-' %></td>
+        <td><%= pl.username %></td>
+        <td><span class="badge <%= pl.active ? 'on' : 'off' %>"><%= pl.active ? 'Active' : 'Deactivated' %></span></td>
+        <td><a href="/p/<%= pl.slug %>" target="_blank">/p/<%= pl.slug %></a></td>
+        <td>
+          <a class="btn small grey inline" href="/admin/edit/<%= pl.id %>">Edit Profile</a>
+          <form class="inline" method="POST" action="/admin/toggle/<%= pl.id %>">
+            <button class="btn small <%= pl.active ? 'red' : '' %>" type="submit"><%= pl.active ? 'Deactivate' : 'Activate' %></button>
+          </form>
+          <form class="inline" method="POST" action="/admin/password/<%= pl.id %>">
+            <input name="password" placeholder="New password">
+            <button class="btn small grey" type="submit">Change</button>
+          </form>
+          <form class="inline" method="POST" action="/admin/delete/<%= pl.id %>" onsubmit="return confirm('Delete this player forever?')">
+            <button class="btn small red" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+    </div>
+    <% } %>
+  </div>
+</div>
+<%- include('footer') %>

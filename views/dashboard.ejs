@@ -1,0 +1,91 @@
+<%- include('header') %>
+<% const action = (typeof adminEditId !== 'undefined') ? '/admin/edit/' + adminEditId : '/dashboard'; %>
+<div class="container">
+  <% if (saved) { %><div class="msg ok">Saved successfully.</div><% } %>
+  <% if (error) { %><div class="msg err"><%= error %></div><% } %>
+
+  <% if (!p) { %>
+    <div class="card"><p>No profile found for this account. Contact the admin.</p></div>
+  <% } else { %>
+  <div class="card">
+    <h2>Your Public Link</h2>
+    <p>Ye link NFC tag mein likha jata hai:</p>
+    <p><a href="/p/<%= p.slug %>" target="_blank">/p/<%= p.slug %></a></p>
+  </div>
+
+  <form method="POST" action="<%= action %>" enctype="multipart/form-data">
+
+    <div class="card">
+      <h2>Basic Info</h2>
+      <label>Photo (JPG, PNG or WEBP)</label>
+      <% if (p.photo) { %><img src="/uploads/<%= p.photo %>" style="width:110px;border-radius:10px;display:block;margin-bottom:8px"><% } %>
+      <input type="file" name="photo" accept="image/*">
+      <div class="grid2">
+        <div><label>Name</label><input name="name" value="<%= p.name %>"></div>
+        <div><label>Position</label><input name="position" value="<%= p.position %>" placeholder="e.g. Striker"></div>
+      </div>
+      <div class="grid3">
+        <div><label>Age</label><input name="age" value="<%= p.age %>"></div>
+        <div><label>Weight (kg)</label><input name="weight_kg" value="<%= p.weight_kg %>"></div>
+        <div><label>Height (cm)</label><input name="height_cm" value="<%= p.height_cm %>"></div>
+      </div>
+      <div class="grid2">
+        <div><label>Foot</label>
+          <select name="foot">
+            <% ['', 'Right', 'Left', 'Both'].forEach(function(f) { %>
+              <option value="<%= f %>" <%= p.foot === f ? 'selected' : '' %>><%= f || 'Select' %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div><label>Jersey Number</label><input name="jersey" value="<%= p.jersey %>"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Contact Buttons</h2>
+      <div class="grid2">
+        <div><label>WhatsApp number (country code ke saath, jaise 919876543210)</label><input name="whatsapp" value="<%= p.whatsapp %>"></div>
+        <div><label>WhatsApp ka chhota message</label><input name="whatsapp_msg" value="<%= p.whatsapp_msg %>"></div>
+        <div><label>Instagram (username ya poora link)</label><input name="instagram" value="<%= p.instagram %>"></div>
+        <div><label>Phone number (call ke liye)</label><input name="phone" value="<%= p.phone %>"></div>
+        <div><label>Email</label><input name="email" value="<%= p.email %>"></div>
+        <div><label>Location (Google Maps link ya shehar ka naam)</label><input name="location" value="<%= p.location %>"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>CV and Highlights</h2>
+      <label>CV PDF upload (max 8 MB)</label>
+      <% if (p.cv_pdf) { %><p><a href="/uploads/<%= p.cv_pdf %>" target="_blank">Current CV dekho</a></p><% } %>
+      <input type="file" name="cv_pdf" accept="application/pdf">
+      <label>Highlights video (YouTube link)</label>
+      <input name="highlights" value="<%= p.highlights %>" placeholder="https://youtube.com/watch?v=...">
+    </div>
+
+    <div class="card">
+      <h2>Career, Achievements, Strengths</h2>
+      <label>Playing Career (har line mein ek club ya saal)</label>
+      <textarea name="career"><%= p.career %></textarea>
+      <label>Achievements (har line mein ek)</label>
+      <textarea name="achievements"><%= p.achievements %></textarea>
+      <label>Strengths (har line mein ek)</label>
+      <textarea name="strengths"><%= p.strengths %></textarea>
+    </div>
+
+    <div class="card">
+      <h2>Profile Template</h2>
+      <label>Apna design chuno</label>
+      <select name="template">
+        <% templates.forEach(function(t) { %>
+          <option value="<%= t %>" <%= p.template === t ? 'selected' : '' %>><%= t %></option>
+        <% }) %>
+      </select>
+      <p style="color:#8a8a92;font-size:13px;margin-top:8px">Save karne ke baad apna public link kholkar dekh lo.</p>
+    </div>
+
+    <button class="btn" type="submit">Save Profile</button>
+    <a class="btn grey" href="/p/<%= p.slug %>" target="_blank">View Public Page</a>
+  </form>
+  <% } %>
+</div>
+<%- include('footer') %>

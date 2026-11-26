@@ -1,0 +1,46 @@
+<%- include('header') %>
+<div class="container" style="max-width:720px">
+  <div style="text-align:center">
+    <% if (p.photo) { %><img class="pf-photo" src="/uploads/<%= p.photo %>" alt="<%= p.name %>"><% } %>
+    <div class="pf-name" style="margin-top:14px"><%= p.name %></div>
+    <div class="pf-pos"><%= p.position %><% if (p.jersey) { %> · #<%= p.jersey %><% } %></div>
+  </div>
+
+  <div class="stats">
+    <% if (p.age) { %><div class="stat"><b><%= p.age %></b><small>Age</small></div><% } %>
+    <% if (p.height_cm) { %><div class="stat"><b><%= p.height_cm %></b><small>Height cm</small></div><% } %>
+    <% if (p.weight_kg) { %><div class="stat"><b><%= p.weight_kg %></b><small>Weight kg</small></div><% } %>
+    <% if (p.foot) { %><div class="stat"><b><%= p.foot %></b><small>Foot</small></div><% } %>
+  </div>
+
+  <div class="actions">
+    <% if (L.wa) { %><a class="act main" href="<%= L.wa %>" target="_blank" rel="noopener">WhatsApp</a><% } %>
+    <% if (L.tel) { %><a class="act" href="<%= L.tel %>">Call</a><% } %>
+    <% if (L.ig) { %><a class="act" href="<%= L.ig %>" target="_blank" rel="noopener">Instagram</a><% } %>
+    <% if (L.mail) { %><a class="act" href="<%= L.mail %>">Email</a><% } %>
+    <% if (L.map) { %><a class="act" href="<%= L.map %>" target="_blank" rel="noopener">Location</a><% } %>
+    <% if (L.cv) { %><a class="act" href="<%= L.cv %>" target="_blank">CV (PDF)</a><% } %>
+  </div>
+
+  <% if (L.yt) { %>
+  <div class="card">
+    <h2>Highlights</h2>
+    <% if (embed) { %><div class="video"><iframe src="<%= embed %>" allowfullscreen></iframe></div><% } %>
+    <a class="act" href="<%= L.yt %>" target="_blank" rel="noopener">Watch on YouTube</a>
+  </div>
+  <% } %>
+
+  <% if (lines(p.career).length) { %>
+  <div class="card"><h2>Playing Career</h2>
+    <% lines(p.career).forEach(function(l) { %><p>• <%= l %></p><% }) %></div>
+  <% } %>
+  <% if (lines(p.achievements).length) { %>
+  <div class="card"><h2>Achievements</h2>
+    <% lines(p.achievements).forEach(function(l) { %><p>• <%= l %></p><% }) %></div>
+  <% } %>
+  <% if (lines(p.strengths).length) { %>
+  <div class="card"><h2>Strengths</h2>
+    <% lines(p.strengths).forEach(function(l) { %><p>• <%= l %></p><% }) %></div>
+  <% } %>
+</div>
+<%- include('footer') %>

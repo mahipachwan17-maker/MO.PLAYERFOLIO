@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= (typeof pageTitle !== 'undefined' && pageTitle) ? pageTitle : 'MO.PLAYERFOLIO' %></title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="/">MO.<span>PLAYER<span>FOLIO</span></a>
+  <nav>
+    <% if (user) { %>
+      <% if (user.role === 'admin') { %><a href="/admin">Admin</a><% } else { %><a href="/dashboard">My Profile</a><% } %>
+      <a href="/logout">Logout (<%= user.username %>)</a>
+    <% } else { %>
+      <a href="/login">Login</a>
+    <% } %>
+  </nav>
+</div>
